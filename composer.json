@@ -1,0 +1,19 @@
+{
+    "name": "lazerx/registration-form",
+    "description": "simple registration form",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Pavel Cherkasov",
+            "email": "deectro@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">= 8.0"
+    }
+}
