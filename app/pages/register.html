@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registration demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+</head>
+<body>
+<div id="registrationBlock" class="container-md">
+    <h1 class="text-center m-5">Registration</h1>
+    <p id="greetings" style="display: none">Success!</p>
+    <form id="registerForm" action="/register" method="POST">
+        <div class="row">
+            <div class="col-6 mb-3">
+                <label for="firstNameInput" class="form-label">First name</label>
+                <input type="text" name="first_name" class="form-control" id="firstNameInput" required>
+            </div>
+            <div class="col-6 mb-3">
+                <label for="lastNameInput" class="form-label">Last name</label>
+                <input type="text" name="last_name" class="form-control" id="lastNameInput" required>
+            </div>
+            <div class="col-12 mb-3">
+                <label for="emailInput" class="form-label">Email address</label>
+                <input type="email" name="email" class="form-control" id="emailInput" aria-describedby="emailHelp" required>
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="col-12 mb-3">
+                <label for="passwordInput" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" id="passwordInput" required>
+            </div>
+            <div class="col-12 mb-3">
+                <label for="passwordConfirmInput" class="form-label">Password confirm</label>
+                <input type="password" name="password_confirm" class="form-control" id="passwordConfirmInput" required>
+            </div>
+            <div class="d-flex flex-row-reverse">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+        </div>
+    </form>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+            crossorigin="anonymous">
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('#registerForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                let data = this;
+                fetch(data.getAttribute('action'), {
+                    method: data.getAttribute('method'),
+                    body: new FormData(data)
+                }).then(response => response.json())
+                    .then(function (data) {
+                        if (data.status === 200) {
+                            const form = document.querySelector('#registerForm')
+                            const greetings = document.querySelector('#greetings')
+                            form.style.display = 'none';
+                            greetings.style.display = 'block';
+                            alert(data.message);
+                        }
+                        if (data.status === 404) {
+                            alert(data.message);
+                        }
+                    });
+            });
+        });
+    </script>
+</body>
+</html>
